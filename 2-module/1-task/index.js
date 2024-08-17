@@ -10,22 +10,3 @@ function sumSalary(salaries) {
   return salary;
 }
 
-let salaries = {
-  John: 1000,
-  Ann: 1600,
-  Pete: 1300,
-  Vasya: Infinity,
-  month: 'December',
-  currency: 'USD',
-  isPayed: false
-}
-
-let salaryObj = {}
-
-const m = Infinity;
-console.log(typeof(m));
-
-console.log(sumSalary(salaries));
-console.log(sumSalary(salaryObj));
-
-

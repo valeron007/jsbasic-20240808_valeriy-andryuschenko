@@ -1,3 +1,6 @@
 function isEmpty(obj) {
-  // ваш код...
+  let isKey = true;
+  for (let key in obj) isKey = false;
+
+  return isKey;
 }

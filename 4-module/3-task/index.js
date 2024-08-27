@@ -1,12 +1,12 @@
-function isAge(cell){
+function isAge(cell) {
   return Number(cell.innerText) < 18;
 }
 
-function  isGender(cell) {
+function isGender(cell) {
   return cell.innerText === 'm';
 }
 
-function  isStatusUndefined(cell) {
+function isStatusUndefined(cell) {
   return cell.dataset.available === undefined;
 }
 
@@ -19,7 +19,7 @@ function highlight(table) {
 
   const indexAge = 1;
   const indexGender = 2;
-  const  indexStatus = 3;
+  const indexStatus = 3;
 
   tableRows.forEach((tableRow) => {
     if (isAge(tableRow.cells[indexAge])) {
@@ -40,7 +40,5 @@ function highlight(table) {
     }
 
   })
-
-
 
 }

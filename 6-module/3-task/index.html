@@ -17,11 +17,16 @@
   <script type="module">
     import slides from './slides.js';
     import Carousel from './index.js';
+    import initCarousel from './carousel.js'
 
     let carousel = new Carousel(slides);
     let containerElement = document.body.querySelector('.container');
 
     containerElement.append(carousel.elem);
+
+    if (initCarousel) {
+      initCarousel();
+    }
   </script>
 </body>
 

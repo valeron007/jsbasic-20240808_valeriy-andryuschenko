@@ -3,6 +3,12 @@ import createElement from '../../assets/lib/create-element.js';
 export default class Carousel {
   slides = []
   elem = null
+  arrowRight = null
+  arrowLeft = null
+  width = 0
+  widthTranslate = 0
+  carouselElement = null
+  slideCount = 0
 
   constructor(slides) {
     this.slides = slides;
@@ -47,9 +53,11 @@ export default class Carousel {
     `;
   }
 
-  #addProduct = () => {
-    const addProductEvent = new CustomEvent("product-add", {
-      detail: this.product_id,
+  #addToBasket = (event) => {
+    const slide = event.target.closest('.carousel__slide');
+
+    const addBasketEvent = new CustomEvent("product-add", {
+      detail: slide.dataset.id,
       bubbles: true,
     });
 
@@ -59,9 +67,58 @@ export default class Carousel {
   #render() {
     this.elem = createElement(this.#template());
 
+    let buttons = [...this.elem.getElementsByTagName('button')];
 
+    buttons.forEach(item => {
+      item.addEventListener('click', this.#addToBasket);
+    })
 
     return this.elem;
+  }
+
+  initCarousel() {
+    this.arrowRight = this.elem.querySelector('.carousel__arrow_right');
+    this.arrowLeft = this.elem.querySelector('.carousel__arrow_left');
+    this.width = this.elem.querySelector('.carousel__inner').offsetWidth;
+
+    this.carouselElement = this.elem.querySelector('.carousel__inner');
+    this.slideCount = this.slides.length - 1;
+    this.widthCarousel = -(this.width * this.slideCount);
+
+    if (this.widthTranslate === 0) {
+      this.arrowLeft.style.display = 'none';
+    }
+
+    this.arrowRight.addEventListener('click', this.#clickRight)
+    this.arrowLeft.addEventListener('click', this.#clickLeft)
+  }
+
+  #clickLeft = (event) => {
+    this.widthTranslate += this.width;
+
+    if (this.widthTranslate === 0) {
+      this.arrowLeft.style.display = 'none';
+    }
+
+    if (this.widthTranslate !== this.widthCarousel) {
+      this.arrowRight.style.display = '';
+    }
+
+    this.carouselElement.style.transform = `translateX(${this.widthTranslate}px)`;
+  }
+
+  #clickRight = (event) => {
+    this.widthTranslate -= this.width;
+
+    if (this.widthTranslate < 0) {
+      this.arrowLeft.style.display = '';
+    }
+
+    if (this.widthTranslate === this.widthCarousel) {
+      this.arrowRight.style.display = 'none';
+    }
+
+    this.carouselElement.style.transform = `translateX(${this.widthTranslate}px)`;
   }
 
 }

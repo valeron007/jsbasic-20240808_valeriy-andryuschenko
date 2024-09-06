@@ -17,16 +17,18 @@
   <script type="module">
     import slides from './slides.js';
     import Carousel from './index.js';
-    import initCarousel from './carousel.js'
 
     let carousel = new Carousel(slides);
     let containerElement = document.body.querySelector('.container');
 
     containerElement.append(carousel.elem);
+    carousel.initCarousel();
 
-    if (initCarousel) {
-      initCarousel();
-    }
+
+    document.body.addEventListener('product-add', (event) => {
+      console.log('product-add', event);
+    });
+
   </script>
 </body>
 

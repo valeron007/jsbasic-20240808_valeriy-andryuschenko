@@ -49,13 +49,6 @@ export default class UserTable {
     `;
   }
 
-  #onDeleteClick = () => {
-    const removeTrEvent = new CustomEvent("remove:tr", {
-      bubbles: true
-    });
-
-    this.elem.dispatchEvent(removeTrEvent);
-  }
   #render() {
     this.elem = UserTable.createElement(this.#template());
 

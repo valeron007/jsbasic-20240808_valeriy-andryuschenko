@@ -1,8 +1,8 @@
-td {
+  .coll-table {
     border: 1px solid black;
     padding: 6px;
 }
 
-table { 
-    border-collapse: collapse; 
+.table-style {
+    border-collapse: collapse;
 }

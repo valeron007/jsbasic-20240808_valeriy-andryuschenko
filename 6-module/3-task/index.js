@@ -9,6 +9,7 @@ export default class Carousel {
   widthTranslate = 0
   carouselElement = null
   slideCount = 0
+  widthCarousel = 0
 
   constructor(slides) {
     this.slides = slides;
@@ -64,6 +65,18 @@ export default class Carousel {
     this.elem.dispatchEvent(addBasketEvent);
   }
 
+  #clickEvent = (event) => {
+    this.arrowRight = this.elem.querySelector('.carousel__arrow_right');
+    this.arrowLeft = this.elem.querySelector('.carousel__arrow_left');
+    const mouseClickEvent = new MouseEvent("click", {
+      bubbles: true,
+      view: window,
+    });
+
+    this.arrowRight.dispatchEvent(mouseClickEvent);
+    this.arrowLeft.dispatchEvent(mouseClickEvent);
+  }
+
   #render() {
     this.elem = createElement(this.#template());
 
@@ -73,17 +86,17 @@ export default class Carousel {
       item.addEventListener('click', this.#addToBasket);
     })
 
+    this.initCarousel();
+
     return this.elem;
   }
 
   initCarousel() {
     this.arrowRight = this.elem.querySelector('.carousel__arrow_right');
     this.arrowLeft = this.elem.querySelector('.carousel__arrow_left');
-    this.width = this.elem.querySelector('.carousel__inner').offsetWidth;
 
     this.carouselElement = this.elem.querySelector('.carousel__inner');
     this.slideCount = this.slides.length - 1;
-    this.widthCarousel = -(this.width * this.slideCount);
 
     if (this.widthTranslate === 0) {
       this.arrowLeft.style.display = 'none';
@@ -94,6 +107,7 @@ export default class Carousel {
   }
 
   #clickLeft = (event) => {
+    this.width = this.elem.querySelector('.carousel__inner').offsetWidth;
     this.widthTranslate += this.width;
 
     if (this.widthTranslate === 0) {
@@ -108,6 +122,11 @@ export default class Carousel {
   }
 
   #clickRight = (event) => {
+    if(this.widthCarousel === 0){
+      this.widthCarousel = -(this.width * this.slideCount);
+    }
+
+    this.width = this.elem.querySelector('.carousel__inner').offsetWidth;
     this.widthTranslate -= this.width;
 
     if (this.widthTranslate < 0) {

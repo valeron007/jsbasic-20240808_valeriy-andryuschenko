@@ -65,18 +65,6 @@ export default class Carousel {
     this.elem.dispatchEvent(addBasketEvent);
   }
 
-  #clickEvent = (event) => {
-    this.arrowRight = this.elem.querySelector('.carousel__arrow_right');
-    this.arrowLeft = this.elem.querySelector('.carousel__arrow_left');
-    const mouseClickEvent = new MouseEvent("click", {
-      bubbles: true,
-      view: window,
-    });
-
-    this.arrowRight.dispatchEvent(mouseClickEvent);
-    this.arrowLeft.dispatchEvent(mouseClickEvent);
-  }
-
   #render() {
     this.elem = createElement(this.#template());
 

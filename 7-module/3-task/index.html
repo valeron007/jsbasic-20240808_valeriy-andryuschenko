@@ -23,7 +23,10 @@
 
     holder.append(stepSlider.elem);
 
-    holder.addEventListener('slider-change', (event) => console.log(event));
+    holder.addEventListener('slider-change', (event) => {
+      let sliderValue = document.querySelector('.slider__value');
+      sliderValue.textContent = event.detail;
+    });
   </script>
 </body>
 

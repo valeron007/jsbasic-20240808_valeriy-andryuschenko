@@ -21,6 +21,8 @@ export default class StepSlider {
 
     this.elem.addEventListener('click', this.#sliderChange);
     this.tumb.addEventListener('pointerdown', this.#sliderDown);
+    this.tumb.addEventListener('pointermove', this.#moveSlider);
+    this.tumb.addEventListener('pointerup', this.#pointerUpSlider);
 
     this.tumb.ondragstart = () => false;
 
@@ -48,6 +50,8 @@ export default class StepSlider {
   }
   #pointerUpSlider = (event) => {
     this.elem.classList.remove('slider_dragging');
+    document.removeEventListener('mousemove', this.#moveSlider);
+    this.tumb.onmouseup = null;
     document.removeEventListener('pointermove', this.#moveSlider);
     document.removeEventListener('pointerup', this.#pointerUpSlider);
   }
@@ -71,7 +75,20 @@ export default class StepSlider {
   }
 
   #moveSlider = (event) => {
-    let newLeft = event.clientX - this.shiftLeftSliderX - this.elem.getBoundingClientRect().left;
+    event.preventDefault();
+    this.elem.classList.add('slider_dragging');
+    let newLeft = event.clientX - this.elem.getBoundingClientRect().left;
+    let leftRelative = newLeft / this.elem.offsetWidth;
+
+    if (leftRelative < 0) {
+      leftRelative = 0;
+    }
+
+    if (leftRelative > 1) {
+      leftRelative = 1;
+    }
+
+    let leftPercents = leftRelative * 100;
 
     if (newLeft < 0) {
       newLeft = 0;
@@ -83,14 +100,12 @@ export default class StepSlider {
       newLeft = rightEdge;
     }
 
-    let leftRelative = newLeft / this.elem.offsetWidth;
     let approximateValue = leftRelative * this.segment;
     this.#value = Math.round(approximateValue);
-    let valuePercents = this.#value / this.segment * 100;
 
     this.#addSpanActive();
 
-    this.#sliderProcent(valuePercents);
+    this.#sliderProcent(leftPercents);
 
     this.tumb.style.left = newLeft + 'px';
 
@@ -105,18 +120,13 @@ export default class StepSlider {
   #sliderDown = (event) => {
     this.shiftLeftSliderX = event.clientX - this.tumb.getBoundingClientRect().left;
 
-    this.tumb.setPointerCapture(event.pointerId);
+    this.elem.setPointerCapture(event.pointerId);
     this.sliderParams = this.tumb.getBoundingClientRect();
-
-    this.elem.classList.add('slider_dragging');
 
     const sliderChangeEvent = new CustomEvent("slider-change", {
       detail: this.#value,
       bubbles: true,
     });
-
-    this.tumb.onpointermove = this.#sliderDown;
-    this.tumb.onpointerup = this.#pointerUpSlider;
 
     this.elem.dispatchEvent(sliderChangeEvent);
   }
@@ -126,7 +136,7 @@ export default class StepSlider {
         <!--Корневой элемент слайдера-->
           <div class="slider">
             <!--Ползунок слайдера с активным значением-->
-            <div class="slider__thumb">
+            <div class="slider__thumb" id="slider-button">
               <span class="slider__value">${this.#value}</span>
             </div>
 

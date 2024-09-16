@@ -20,7 +20,7 @@ export default class ProductCard {
 
   #template() {
     return `
-      <div class="card">
+      <div class="card" data-card-id="${this.product_id}">
         <div class="card__top">
           <img src="/assets/images/products/${this.image}" class="card__image" alt="product">
           <span class="card__price">€${this.price.toFixed(2)}</span>

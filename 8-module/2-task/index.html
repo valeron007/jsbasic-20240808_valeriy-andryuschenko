@@ -82,6 +82,7 @@
     let categoryControl = document.querySelector('[data-category]');
     categoryControl.addEventListener('change', () => {
       if (event.target.checked) {
+        //productGrid.updateFilter({ category: 'seafood-dishes' });
         productGrid.updateFilter({ category: 'soups' });
       } else {
         productGrid.updateFilter({ category: '' });

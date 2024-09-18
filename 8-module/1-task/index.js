@@ -5,8 +5,6 @@ export default class CartIcon {
   constructor() {
     this.render();
 
-    this.initialTopCoord = this.elem.getBoundingClientRect().top + window.pageYOffset;
-
     this.addEventListeners();
   }
 
@@ -42,6 +40,10 @@ export default class CartIcon {
   }
 
   updatePosition() {
+    if (!this.initialTopCoord) {
+      this.initialTopCoord = this.elem.getBoundingClientRect().top + window.pageYOffset;
+    }
+
     if (!this.elem.offsetWidth && !this.elem.offsetHeight) return;
 
     if (document.documentElement.clientWidth <= 767) {

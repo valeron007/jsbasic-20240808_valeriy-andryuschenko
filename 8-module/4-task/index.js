@@ -224,7 +224,7 @@ export default class Cart {
       this.cartItems = [];
 
       resp.json().then((json) => {
-        console.log(json);
+
       });
     })
       .catch(() => {

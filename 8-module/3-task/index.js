@@ -6,7 +6,7 @@ export default class Cart {
   }
 
   addProduct(product) {
-    if (product === null) return;
+    if (product === null || product === undefined) return;
 
     let item = {}
 
@@ -52,7 +52,11 @@ export default class Cart {
   }
 
   isEmpty() {
-    return this.cartItems.length !== 0;
+    if (this.cartItems.length === 0) {
+      return true;
+    }
+
+    return false;
   }
 
   getTotalCount() {

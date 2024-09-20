@@ -16,7 +16,7 @@
     <h3 class="subheading">Отличная еда・Бесплатная доставка・Лучшие цены</h3>
 
     <div data-cart-icon-holder>
-      <!--СЮДА ВСТАВЛЯЕТСЯ CART-ICON-->
+
     </div>
   </header>
 
@@ -99,6 +99,7 @@
       if (button.dataset.addProductId) {
         let addProductId = button.dataset.addProductId;
         let productToAdd = products.find((product) => product.id === addProductId);
+
         cart.addProduct(productToAdd);
 
         return;
